@@ -93,7 +93,7 @@ public class OpenFile {
             }
         }
         
-        //System.out.println(list.size());
+        System.out.println(list.size());
         array = new Double[list.size()];
         return list.toArray(array);
     }

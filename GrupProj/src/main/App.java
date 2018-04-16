@@ -18,6 +18,6 @@ public class App {
     public static void main(String[] args) throws Exception
     {
     	OpenFile of = new OpenFile();
-    	of.readFiles();			
+    	of.readFiles();		// wczytanie plikow	
     }
 }
