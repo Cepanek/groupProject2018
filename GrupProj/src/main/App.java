@@ -1,6 +1,7 @@
 package main;
 
 import main.Tools.OpenFile;
+
 /**
  * Ciało głównej aplikacji
  *

@@ -86,7 +86,7 @@ public class OpenFile {
             {
                 value = Double.parseDouble(text);    // pojedyncza wartosc
                 list.add(value);    // dodaje do listy
-                //DataFrame df = new DataFrame(3.14f, 3.45555f, 2.34f);
+                //DataFrame df = new DataFrame(3.14f, 3.45555f, 2.34f);  przyklad
                 //System.out.println(df.getOrgData());
                 //System.out.println(df.getF60Data());
                 //System.out.println(df.getF80Data());
