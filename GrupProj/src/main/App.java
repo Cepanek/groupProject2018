@@ -1,6 +1,6 @@
 package main;
 
-import main.Tools.OpenFile;
+import main.Tools.ReadFolder;
 
 /**
  * Ciało głównej aplikacji
@@ -18,7 +18,23 @@ public class App {
     
     public static void main(String[] args) throws Exception
     {
-    	OpenFile of = new OpenFile();
-    	of.readFiles();		// wczytanie plikow	
+
+        /*
+         * 	private final static String INPUT_FOLDER = "H:\\OFFLINE\\Offline\\electron\\ch1_org_filtered";
+         * 	/** DLA WINDOWSA **
+         *  private final static String INPUT_FOLDER = "electron\\ch1_org_filtered";
+         *  /** DLA LINUXA **
+         *private final static String INPUT_FOLDER = "GrupProj/electron/ch1_org_filtered";
+         */
+
+
+        ReadFolder readFolder = new ReadFolder("GrupProj/electron/ch1_org_filtered");
+        //OpenFile of = new OpenFile();
+    	//of.readFiles();		// wczytanie plikow
+        readFolder.readFiles();
     }
+
+
+
+
 }
