@@ -1,8 +1,11 @@
+/*
+
+
+
+        TO JUŻ RACZEJ NIE POTRZEBNE
+
+
 package main.Tools;
-
-import main.Analysator.PeakFinder;
-
-import java.util.List;
 
 /**
  * Odszumiacz
@@ -10,7 +13,7 @@ import java.util.List;
  * @TODO
  * - policz średnią
  * - wyznacz próg szumu
- */
+ *
 public class NoiseReductor {
 
     private List<PeakFinder> peaks;
@@ -20,7 +23,7 @@ public class NoiseReductor {
     /**
      *
      * @param peaks
-     */
+     *
     public NoiseReductor(List<PeakFinder> peaks) {
         this.peaks = peaks;
         this.noiseBorder= 0; //to trzeba będzie policzyć
@@ -29,7 +32,7 @@ public class NoiseReductor {
     /**
      *
      * @return
-     */
+     *
     public float getNoiseBorder() {
         return noiseBorder;
     }
@@ -37,8 +40,10 @@ public class NoiseReductor {
     /**
      *
      * @param noiseBorder
-     */
+     *
     public void setNoiseBorder(float noiseBorder) {
         this.noiseBorder = noiseBorder;
     }
 }
+
+/**/
