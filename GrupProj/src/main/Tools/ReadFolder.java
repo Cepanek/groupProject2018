@@ -33,10 +33,11 @@ public class ReadFolder {
     public void readFiles() throws FileNotFoundException, IOException  {
         File folder = new File(input);                  // tworze katalog
         File[] files  = folder.listFiles();;            // tablica plikow
-        OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plików
+//        OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plików
 
         for (File file : files) {
             System.out.println("Loading: " + file.getAbsolutePath());               // sciezka + nazwa pliku, ktory obecnie wczytuje
+            OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plików
             data.read(file.getAbsolutePath());          // wczytuje dane
             /*------------------------------------------------------------------------------
             data.getNoise();                            // tu jest poziom szumu
