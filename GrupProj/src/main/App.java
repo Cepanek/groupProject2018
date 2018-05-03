@@ -24,7 +24,7 @@ public class App {
          *private final static String INPUT_FOLDER = "GrupProj/electron/ch1_org_filtered";
          */
 
-        ReadFolder readFolder = new ReadFolder("GrupProj/electron/ch1_org_filtered");
+        ReadFolder readFolder = new ReadFolder("electron/ch1_org_filtered");
         readFolder.readFiles();
     }
 

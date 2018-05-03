@@ -19,7 +19,7 @@ public class OpenFile {
     private ArrayList<Float> bessel60;
     private ArrayList<Float> bessel80;
     private List<DataFrame> dataFrame = new ArrayList<>();
-    private Double noise;
+    private Float noise;
     private Double maxValueInFile = 0.0;
 
     /**
@@ -30,7 +30,7 @@ public class OpenFile {
      * @throws IOException
      */
     public void read(String path) throws IOException {
-        Double sumValue = 0.0;
+        Float sumValue = 0.0f;
 
         BufferedReader file = new BufferedReader(new FileReader(path));
         file.readLine();                    // pomijam 1-szy wiersz
@@ -51,7 +51,7 @@ public class OpenFile {
             }
 //            System.out.println(i+".\t czytana wartość: "+original.get(i) + ", \t Suma: " + sumValue + ", \t Maksymalna wartośc: " + maxValueInFile );
         }
-        noise = sumValue / (double) original.size();
+        noise = sumValue / original.size();
     }
 
     /**
@@ -83,7 +83,7 @@ public class OpenFile {
      * Zwracam wynik obliczonego szumu
      * @return
      */
-    public Double getNoise() {
+    public Float getNoise() {
         return noise;
     }
 

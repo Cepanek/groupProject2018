@@ -20,8 +20,9 @@ public class DataFrame {
     private float orgData;
     private float f60Data;
     private float f80Data;
-    private boolean isHit;
-    private boolean isLost;
+    private boolean isHitOrg;
+    private boolean isHit60;
+    private boolean isHit80;
 
     /**
      *
@@ -87,36 +88,49 @@ public class DataFrame {
      *
      * @return
      */
-    public boolean isHit() {
-        return isHit;
+    public boolean isHit60() {
+        return isHit60;
     }
 
     /**
      *
      * @param hit
      */
-    public void setHit(boolean hit) {
-        isHit = hit;
+    public void setHit60(boolean hit) {
+        isHit60 = hit;
     }
-
     /**
      *
      * @return
      */
-    public boolean isLost() {
-        return isLost;
+    public boolean isHit80() {
+        return isHit80;
     }
 
     /**
      *
-     * @param lost
+     * @param hit
      */
-    public void setLost(boolean lost) {
-        isLost = lost;
+    public void setHit80(boolean hit) {
+        isHit80 = hit;
+    }
+    /**
+     *
+     * @return
+     */
+    public boolean isHitOrg() {
+        return isHitOrg;
     }
 
     /**
      *
+     * @param hit
+     */
+    public void setHitOrg(boolean hit) {
+        isHitOrg = hit;
+    }
+
+    /**
      * @return
      */
     @Override
@@ -125,8 +139,22 @@ public class DataFrame {
                 "orgData=" + orgData +
                 ", f60Data=" + f60Data +
                 ", f80Data=" + f80Data +
-                ", isHit=" + isHit +
-                ", isLost=" + isLost +
+                ", isHitOrg=" + isHitOrg +
+                ", isHit60=" + isHit60 +
+                ", isHit80=" + isHit80 +
                 '}';
+    }
+
+    /**
+     * @return
+     */
+    public String toCsv() {
+        return
+                orgData + ","+
+                f60Data + ","+
+                f80Data + ","+
+                isHitOrg + ","+
+                isHit60 + ","+
+                isHit80 + "\n";
     }
 }

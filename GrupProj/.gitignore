@@ -7,4 +7,5 @@
 .project
 .idea
 .idea/*
-.iml
+*.iml
+electron/*

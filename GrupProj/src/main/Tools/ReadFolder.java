@@ -1,5 +1,6 @@
 package main.Tools;
 
+import main.Analysator.PeakFinder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +11,8 @@ import java.text.DecimalFormat;
  *
  */
 public class ReadFolder {
-
+    private static final String ORIGINAL = "org";
+    private static final int START = 10;
     private String input;
 
     /**
@@ -44,7 +46,8 @@ public class ReadFolder {
             data.getDataFrame();                        // tu jest lista obiektów
             data.getMaxValueInFile();                   // tu jest maksymalna wartość
             ------------------------------------------------------------------------------*/
-
+            PeakFinder peakFinder = new PeakFinder(data.getDataFrame(), data.getNoise(), file.getName());
+            peakFinder.findPeak(ORIGINAL, START, true);
             DecimalFormat df = new DecimalFormat("#,###,###.0000");
             System.out.println("Maksymalny szczyt to: " + df.format(data.getMaxValueInFile()) + ", a szum to: " + df.format(data.getNoise()));
             System.out.println("[OK]");
