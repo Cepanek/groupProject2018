@@ -1,6 +1,7 @@
 package main.Tools;
 
 
+import java.text.DecimalFormat;
 
 /**
  * Obiekt do analizy
@@ -149,10 +150,11 @@ public class DataFrame {
      * @return
      */
     public String toCsv() {
+        DecimalFormat df = new DecimalFormat("#,###,###.0000");
         return
-                orgData + ","+
-                f60Data + ","+
-                f80Data + ","+
+                df.format(orgData) + ","+
+                df.format(f60Data) + ","+
+                df.format(f80Data) + ","+
                 isHitOrg + ","+
                 isHit60 + ","+
                 isHit80 + "\n";

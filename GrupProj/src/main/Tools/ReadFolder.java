@@ -38,7 +38,7 @@ public class ReadFolder {
 //        OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plików
 
         for (File file : files) {
-            System.out.println("Loading: " + file.getAbsolutePath());               // sciezka + nazwa pliku, ktory obecnie wczytuje
+//            System.out.println("Loading: " + file.getAbsolutePath());               // sciezka + nazwa pliku, ktory obecnie wczytuje
             OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plików
             data.read(file.getAbsolutePath());          // wczytuje dane
             /*------------------------------------------------------------------------------
@@ -49,8 +49,8 @@ public class ReadFolder {
             PeakFinder peakFinder = new PeakFinder(data.getDataFrame(), data.getNoise(), file.getName());
             peakFinder.findPeak(ORIGINAL, START, true);
             DecimalFormat df = new DecimalFormat("#,###,###.0000");
-            System.out.println("Maksymalny szczyt to: " + df.format(data.getMaxValueInFile()) + ", a szum to: " + df.format(data.getNoise()));
-            System.out.println("[OK]");
+//            System.out.println("Maksymalny szczyt to: " + df.format(data.getMaxValueInFile()) + ", a szum to: " + df.format(data.getNoise()));
+//            System.out.println("[OK]");
         }
     }
 }

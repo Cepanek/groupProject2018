@@ -17,7 +17,7 @@ import java.util.Map;
  * - zmień flagę w DataFrame || odkopiuj DataFrame do nowej listy
  */
 public class PeakFinder {
-    private static final Integer INTERVAL = 5;
+    private static final Integer INTERVAL = 1;
     private static final Float LIMIT = 5.0f;
     private static final String ORIGINAL = "org";
     private static final String FILTER_60 = "60";
@@ -67,7 +67,7 @@ public class PeakFinder {
              end = datasize;
              jump = INTERVAL;
         }else if(whichFlow == FILTER_60  || whichFlow == FILTER_80){
-             end = 15;
+             end = 100;
              jump = 1;
         }else{
             System.out.println("Parameter whichFlow is null or empty or value incorrect");
@@ -109,22 +109,22 @@ public class PeakFinder {
                     if(heightDiff > heightBorder){
 //                        System.out.println("--------LOOOL-------");
                         if(whichFlow == ORIGINAL) {
-                            System.out.println("####### org ######");
+//                            System.out.println("####### org ######");
                             //DataFrame peak = getMaxValue(peaksToAnalysis.subList(i - INTERVAL, i + INTERVAL));
                             findedPeaks.put(i, peaksToAnalysis.get(i));
                             findedPeaks.get(i).setHitOrg(true);
-                            System.out.println("--------");
+//                            System.out.println("--------");
                             findAll = true;
                             findPeak(FILTER_60, i, findAll);
                         }else if(whichFlow == FILTER_60 && findAll == true) { //od tego miejsca sprawdzamy pierwszy filtr
                             //isHit
-                            System.out.println("     ####### 60 ######");
-                            System.out.println(findedPeaks.get(ii).toString());
+//                            System.out.println("     ####### 60 ######");
+//                            System.out.println(findedPeaks.get(ii).toString());
                             findedPeaks.get(ii).setHit60(true);
                             findPeak(FILTER_80, ii , findAll);
                         }else if(whichFlow == FILTER_80 && findAll == true) { //od tego miejsca sprawdzamy grugi filtr
                             //isHit
-                            System.out.println("           ####### 80 ######");
+//                            System.out.println("           ####### 80 ######");
                             findedPeaks.get(ii).setHit80(true);
                             findAll = false;
                         }
@@ -133,7 +133,7 @@ public class PeakFinder {
             }
         }
        // peakAnalysis(findedPeaks);
-        System.out.println(findedPeaks.values().toString());
+//        System.out.println(findedPeaks.values().toString());
         SaveFile s = new SaveFile(findedPeaks, fileName);
     }
 
