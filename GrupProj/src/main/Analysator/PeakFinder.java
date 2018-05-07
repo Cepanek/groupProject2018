@@ -1,7 +1,8 @@
 package main.Analysator;
 
 import main.Tools.DataFrame;
-import main.Tools.SaveFile;
+import main.Statistics.Results;
+// import Tools.SaveFile;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Analizator peakÃ³w
+ * Analizator peaków
  *
  * @TODO
  * - na podstawie wyznaczonego szumu wyznacz piki
- * - oznacz piki porÃ³wnujÄ…c sygnaÅ‚ oryginalny z przefiltrowanymi
- * - zmieÅ„ flagÄ™ w DataFrame || odkopiuj DataFrame do nowej listy
+ * - oznacz piki porównuj¹c sygna³ oryginalny z przefiltrowanymi
+ * - zmieñ flagê w DataFrame || odkopiuj DataFrame do nowej listy
  */
 public class PeakFinder {
     private static final Integer INTERVAL = 1;
@@ -23,8 +24,11 @@ public class PeakFinder {
     private static final String FILTER_60 = "60";
     private static final String FILTER_80 = "80";
     private List<DataFrame> peaksToAnalysis; //dane do badania
-    private String fileName;
+   // private String fileName; //never used
 
+    
+    private static final Results picks = new Results();  //###### Obiekt przechowujacy dane do statystyki
+    
     public void setFindedPeaks(Map<Integer, DataFrame> findedPeaks) {
         this.findedPeaks = findedPeaks;
     }
@@ -38,8 +42,8 @@ public class PeakFinder {
     private Float border; //szumy
     private Float localMin;
     private Float localMax;
-    private Float localSecondMax;
-    private int tempI;
+  //  private Float localSecondMax; //never used
+  //  private int tempI; //never used
 
     /**
      *
@@ -49,16 +53,19 @@ public class PeakFinder {
     public PeakFinder(List<DataFrame> peaksToAlanyse, Float border, String fileName) {
         this.peaksToAnalysis = peaksToAlanyse;
         this.border = border;
-        this.fileName = fileName;
+      //  this.fileName = fileName; //never used
     }
 
     public void findPeak(String whichFlow, int ii, boolean findAll) throws IOException {
-        int datasize = peaksToAnalysis.size();
+        
+    	
+    	
+    	int datasize = peaksToAnalysis.size();
 //        System.out.println("Rozmiar pliku: "+datasize);
 
         localMin = border;
-        localSecondMax = border;
-        localMax = border; //namniejsza wartosc jaka moze byÄ‡ to granica szumu
+        // localSecondMax = border; //never used
+        localMax = border; //namniejsza wartosc jaka moze byæ to granica szumu
         int end = datasize;
         int jump = INTERVAL;
 
@@ -89,24 +96,29 @@ public class PeakFinder {
 //            System.out.println("for "+whichFlow+" "+dataToAnalysis+" "+i);
             if(dataToAnalysis < border){
 //                System.out.println("if 1 "+dataToAnalysis+"  "+border);
-                continue; //wynik do odrzucenia bo jets poniÅ¼ej szumu
+                continue; //wynik do odrzucenia bo jets poni¿ej szumu
             }else{
 //                System.out.println("else 1 ");
                 if(dataToAnalysis>localMin && dataToAnalysis >= peaksToAnalysis.get(i-10).getOrgData()){
 //                    System.out.println("if 2 ");
-                    //caly czas idziemy do gÃ³ry
+                    //caly czas idziemy do góry
                     localMax = dataToAnalysis;
 //                    System.out.println("Max: "+localMax);
 
                 }else if(dataToAnalysis<localMax){
 //                    System.out.println("else 2 ");
-                    //caÅ‚y czas idziemy w dÃ³Å‚
+                    //ca³y czas idziemy w dó³
                     localMin = dataToAnalysis;
 //                    System.out.println("Min: "+localMin);
                     Float heightDiff = localMax - localMin;
                     Float heightBorder = (localMax*LIMIT)/100;
 //                    System.out.println("--- Diff: "+heightDiff);
                     if(heightDiff > heightBorder){
+                    	
+                    	Boolean hOrg=false;
+                    	Boolean h60=false;
+                    	Boolean h80=false;
+                    	
 //                        System.out.println("--------LOOOL-------");
                         if(whichFlow == ORIGINAL) {
 //                            System.out.println("####### org ######");
@@ -115,30 +127,79 @@ public class PeakFinder {
                             findedPeaks.get(i).setHitOrg(true);
 //                            System.out.println("--------");
                             findAll = true;
+                            
+                            hOrg=true;
+                            
                             findPeak(FILTER_60, i, findAll);
                         }else if(whichFlow == FILTER_60 && findAll == true) { //od tego miejsca sprawdzamy pierwszy filtr
                             //isHit
 //                            System.out.println("     ####### 60 ######");
 //                            System.out.println(findedPeaks.get(ii).toString());
                             findedPeaks.get(ii).setHit60(true);
+                            
+                            h60=true;
+                            
                             findPeak(FILTER_80, ii , findAll);
                         }else if(whichFlow == FILTER_80 && findAll == true) { //od tego miejsca sprawdzamy grugi filtr
                             //isHit
 //                            System.out.println("           ####### 80 ######");
                             findedPeaks.get(ii).setHit80(true);
+                            
+                            h80=true;
+                            
                             findAll = false;
                         }
+                        
+                      //###################### pobranie wartoœci false/true
+                                                
+                        picks.AddData(hOrg, h60, h80);
+                        
+                      //######################   
                     }
                 }
             }
         }
-       // peakAnalysis(findedPeaks);
-//        System.out.println(findedPeaks.values().toString());
-        SaveFile s = new SaveFile(findedPeaks, fileName);
+       
+       peakAnalysis(picks); //##tutaj przy ka¿dym piku ta metoda jest uruchamiana
+        
+       //System.out.println(findedPeaks.values().toString());
+        // SaveFile s = new SaveFile(findedPeaks, fileName); //never used
     }
 
-    public void peakAnalysis(List<DataFrame> findedPeaks){
-        //tu bedzie gruba analiza pikÃ³w
+    public void peakAnalysis(Results picks){
+        //tu bedzie gruba analiza pików
+    	//System.out.println(findedPeaks.values().toString()); 
+    	
+    	//Integer OrgSize = picks.getHitOrg().size(); //ilosc wszystkich pickow
+    	Integer OrgSize = picks.trueCounter(picks.getHitOrg()); //ilosc wszystkich pickow
+    	Integer h60TrueCount = picks.trueCounter(picks.getHit60()); //ilosc trafien filtr-60
+    	Integer h80TrueCount = picks.trueCounter(picks.getHit80()); //ilosc trafien filtr-80
+    	   	
+    	/* zabezpieczenie przed dzieleniem przez 0 - gdyby w danej partii plików nie by³o pick'ów */
+    	
+    	Float lostPercent60;// = 2.0f; 
+    	Float lostPercent80;// = 2.0f;
+
+    	if (h60TrueCount>0) 
+    	{
+    		lostPercent60 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //wersja pokazuj¹ca, ile procent utracono
+    		//lostPercent60 = OrgSize*((float)OrgSize/((float)h60TrueCount)); //wersja procentów z zapisem, o którym wspomina³ Szadkowski
+    	} else {
+    		lostPercent60 = (float) 0.0;
+    	}
+    		
+    	if (h80TrueCount>0)
+    	{
+    		lostPercent80 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //analogicznie, j.w.
+    		//lostPercent80 = OrgSize*((float)OrgSize/((float)h80TrueCount));
+    		
+    	} else {
+    		lostPercent80 = (float) 0.0;
+    	}
+    	
+    	System.out.printf("Procent utraconych pik'ów: filtr 60: %.2f",lostPercent60);
+    	System.out.printf(", filtr 80: %.2f %n",lostPercent80);
+    	
     }
 
     /**
@@ -176,7 +237,7 @@ public class PeakFinder {
      * @return
      */
     @Override
-    public String toString() {
+    public String toString() {    	
         return "PeakFinder{" +
                 "peaksToAlanyse=" + peaksToAnalysis +
                 ", findedPeaks=" + findedPeaks +
