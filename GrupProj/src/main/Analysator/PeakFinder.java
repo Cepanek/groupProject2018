@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Analizator peaków
  *
@@ -167,13 +172,17 @@ public class PeakFinder {
     }
 
     public void peakAnalysis(Results picks){
-        //tu bedzie gruba analiza pików
+        //analiza pików
     	//System.out.println(findedPeaks.values().toString()); 
     	
     	//Integer OrgSize = picks.getHitOrg().size(); //ilosc wszystkich pickow
     	Integer OrgSize = picks.trueCounter(picks.getHitOrg()); //ilosc wszystkich pickow
     	Integer h60TrueCount = picks.trueCounter(picks.getHit60()); //ilosc trafien filtr-60
     	Integer h80TrueCount = picks.trueCounter(picks.getHit80()); //ilosc trafien filtr-80
+    	
+    	//wyrzucenie na ekran liczby pickow.
+    	
+    	//System.out.println("Liczba pick'ow:\nWykres oryginalny: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount);
     	   	
     	/* zabezpieczenie przed dzieleniem przez 0 - gdyby w danej partii plików nie by³o pick'ów */
     	
@@ -197,9 +206,28 @@ public class PeakFinder {
     		lostPercent80 = (float) 0.0;
     	}
     	
-    	System.out.printf("Procent utraconych pik'ów: filtr 60: %.2f",lostPercent60);
-    	System.out.printf(", filtr 80: %.2f %n",lostPercent80);
+    	//wyrzucenie na ekran % utraty pickow.
     	
+    	//System.out.printf("Procent utraconych pik'ów: filtr 60: %.2f",lostPercent60);
+    	//System.out.printf(", filtr 80: %.2f %n",lostPercent80);
+    	
+    	
+    	/*---zapis do pliku---*/
+    	String wynik = "";
+    	wynik +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
+    	wynik +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
+    	String nazwaPliku = "Analiza.csv";
+    	
+    	Path sciezka = Paths.get(nazwaPliku);
+    	ArrayList<String> out = new ArrayList<>();
+    	
+        out.add(wynik);
+        
+        try {
+            Files.write(sciezka, out);
+        } catch (IOException ex) {
+            System.out.println("Nie mogê zapisaæ pliku!");
+        }
     }
 
     /**
