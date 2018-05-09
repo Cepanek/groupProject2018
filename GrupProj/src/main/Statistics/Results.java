@@ -1,5 +1,9 @@
 package main.Statistics;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +49,7 @@ public class Results {
 		}
 	}
 	
-	/* narzedzie do zliczania trafieñ - wartoœci True w liœcie - */
+	/* narzedzie do zliczania trafieñ - wartoœci True w danej liœcie */
 	
 	public Integer trueCounter(List<Boolean> list)
 	{
@@ -60,7 +64,23 @@ public class Results {
 		return temp;
 	}
 	
+	/*  zapis do pliku csv, jako dane wejsciowe zbiorczy string  */
 	
+	public void csvWriter(String endScore)
+	{
+		String fileName = "Analiza.csv";
+    	
+    	Path sPath = Paths.get(fileName);
+    	ArrayList<String> out = new ArrayList<>();
+    	
+        out.add(endScore);
+        
+        try {
+            Files.write(sPath, out);
+        } catch (IOException ex) {
+            System.out.println("Nie mogê zapisaæ pliku!");
+        }
+	}
 		
 	/*
 	 * 

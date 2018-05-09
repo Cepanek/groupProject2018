@@ -212,22 +212,12 @@ public class PeakFinder {
     	//System.out.printf(", filtr 80: %.2f %n",lostPercent80);
     	
     	
-    	/*---zapis do pliku---*/
-    	String wynik = "";
-    	wynik +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
-    	wynik +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
-    	String nazwaPliku = "Analiza.csv";
+    	/*---zapis do pliku - koñcowy wynik w jednej zmiennej string---*/
+    	String endScore = "";
+    	endScore +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
+    	endScore +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
     	
-    	Path sciezka = Paths.get(nazwaPliku);
-    	ArrayList<String> out = new ArrayList<>();
-    	
-        out.add(wynik);
-        
-        try {
-            Files.write(sciezka, out);
-        } catch (IOException ex) {
-            System.out.println("Nie mogê zapisaæ pliku!");
-        }
+    	picks.csvWriter(endScore);
     }
 
     /**
