@@ -192,15 +192,15 @@ public class PeakFinder {
     	if (h60TrueCount>0) 
     	{
     		lostPercent60 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //wersja pokazuj¹ca, ile procent utracono
-    		//lostPercent60 = OrgSize*((float)OrgSize/((float)h60TrueCount)); //wersja procentów z zapisem, o którym wspomina³ Szadkowski
+    		//lostPercent60 = 100*((float)OrgSize/((float)h60TrueCount)); //wersja procentów z zapisem, o którym wspomina³ Szadkowski
     	} else {
     		lostPercent60 = (float) 0.0;
     	}
     		
     	if (h80TrueCount>0)
     	{
-    		lostPercent80 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //analogicznie, j.w.
-    		//lostPercent80 = OrgSize*((float)OrgSize/((float)h80TrueCount));
+    		lostPercent80 = OrgSize-(((float)h80TrueCount)/(float)OrgSize); //analogicznie, j.w.
+    		//lostPercent80 = 100*((float)OrgSize/((float)h80TrueCount));
     		
     	} else {
     		lostPercent80 = (float) 0.0;
@@ -214,8 +214,15 @@ public class PeakFinder {
     	
     	/*---zapis do pliku - koñcowy wynik w jednej zmiennej string---*/
     	String endScore = "";
-    	endScore +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
-    	endScore +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
+    	//endScore +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
+    	//endScore +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
+
+    	endScore +="Sumaryczna_liczba_pick'ow:\n";
+    	endScore +="Pick_prawdziwy:"+" filtr60:"+" filtr80:\n";
+    	endScore += OrgSize+" "+h60TrueCount+" "+h80TrueCount;
+    	endScore +="\nProcent_utraconych_pik'ow:\n";
+    	endScore +="filtr60:"+" filtr_80:\n";
+    	endScore +=lostPercent60+" "+lostPercent80;
     	
     	picks.csvWriter(endScore);
     }
