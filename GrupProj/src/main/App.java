@@ -2,7 +2,7 @@ package main;
 
 import main.Tools.ReadFolder;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 
 /**
  * Ciało głównej aplikacji
@@ -25,10 +25,10 @@ public class App {
          *  /** DLA LINUXA **
          *private final static String INPUT_FOLDER = "GrupProj/electron/ch1_org_filtered";
          */
-        System.out.println("Start: "+ Instant.now().toString());
+        System.out.println("Start: "+ ZonedDateTime.now() .toString());
         ReadFolder readFolder = new ReadFolder("electron/ch1_org_filtered");
         readFolder.readFiles();
-        System.out.println("Stop: "+ Instant.now().toString());
+        System.out.println("Stop: "+ ZonedDateTime.now().toString());
     }
 
 
