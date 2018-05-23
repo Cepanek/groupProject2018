@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Klasa - kontener pomocniczy do przechowywania i zliczania wartości false/true dla poszczególnych picków.
+ * Author: Lukasz Janus
+ * 20-05-2018
+ * 
+ * Klasa - kontener pomocniczy do przechowywania i zliczania wartosci false/true dla poszczegolnych peak'ow.
  */
 public class Results {
 	
@@ -28,7 +31,7 @@ public class Results {
 	}
 
 	/**
-	 * Metoda dodająca trafienia
+	 * Metoda dodajaca trafienia
 	 * @param hOrg
 	 * @param h60
 	 * @param h80

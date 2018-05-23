@@ -36,6 +36,24 @@ public class DataFrame {
         this.f60Data = f60Data;
         this.f80Data = f80Data;
     }
+    
+    /**
+    * Konstruktor testowo dorzucony przy probie odczytu plikow wynikowych, do usuniecia
+    * @param orgData
+    * @param f60Data
+    * @param f80Data
+    * @param orgData
+    * @param f60Data
+    * @param f80Data
+    */
+   public DataFrame(float orgData, float f60Data, float f80Data, boolean bisHitOrg, boolean bisHit60, boolean bisHit80 ) {
+       this.orgData = orgData;
+       this.f60Data = f60Data;
+       this.f80Data = f80Data;
+       this.isHitOrg = bisHitOrg;
+       this.isHit60 = bisHit60;
+       this.isHit80 = bisHit80;
+   }
 
     /**
      *
@@ -150,13 +168,13 @@ public class DataFrame {
      * @return
      */
     public String toCsv() {
-        DecimalFormat df = new DecimalFormat("#,###,###.0000");
+        DecimalFormat df = new DecimalFormat("#,###,###,###.0000");
         return
-                df.format(orgData) + ","+
-                df.format(f60Data) + ","+
-                df.format(f80Data) + ","+
-                isHitOrg + ","+
-                isHit60 + ","+
+                df.format(orgData) + ", "+
+                df.format(f60Data) + ", "+
+                df.format(f80Data) + ", "+
+                isHitOrg + ", "+
+                isHit60 + ", "+
                 isHit80 + "\n";
     }
 }
