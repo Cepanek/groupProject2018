@@ -30,7 +30,7 @@ public class NoiseReductor {
      */
     public NoiseReductor(List<PeakFinder> peaks) {
         this.peaks = peaks;
-        this.noiseBorder= 0; //to trzeba będzie policzyć
+        this.noiseBorder= 0; //to trzeba bedzie policzyc
    }
 
     /**

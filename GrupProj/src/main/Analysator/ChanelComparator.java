@@ -3,10 +3,10 @@ package main.Analysator;
 import main.Tools.DataFrame;
 
 /**
- * Porównaj piki z kanałów
+ * Porownaj piki z kanalow
  *
  * @TODO
- * - jeżeli pik występuje w 3 miejscach- odkopiuj do nowej listy trafień potwierdzonych
+ * - jezeli pik wystepuje w 3 miejscach- odkopiuj do nowej listy trafien potwierdzonych
  */
 public class ChanelComparator {
 

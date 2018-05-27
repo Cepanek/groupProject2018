@@ -1,6 +1,5 @@
 package main.Analysator;
 
-import main.Statistics.Results;
 import main.Tools.DataFrame;
 import main.Tools.SaveFile;
 
@@ -10,12 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Analizator peaków
- * #peaksToAnalysis to lista obiektów z danymi to szukania w nich pików
+ * Analizator peakow
+ * #peaksToAnalysis to lista obiektow z danymi to szukania w nich pikow
  * @TODO
  * - na podstawie wyznaczonego szumu wyznacz piki
- * - oznacz piki porównując sygnał oryginalny z przefiltrowanymi
- * - zmień flagę w DataFrame || odkopiuj DataFrame do nowej listy
+ * - oznacz piki porownujac sygnal� oryginalny z przefiltrowanymi
+ * - zmien flage w DataFrame || odkopiuj DataFrame do nowej listy
  */
 public class PeakFinder {
     private static final Integer INTERVAL = 1;
@@ -26,7 +25,7 @@ public class PeakFinder {
     private List<DataFrame> peaksToAnalysis;
     private String fileName;
     private Map<Integer, DataFrame> findedPeaks = new HashMap<>();
-    private static final Results picks = new Results();
+
     private Float border; //szumy
     private Float localMin;
     private Float localMax;
@@ -43,11 +42,11 @@ public class PeakFinder {
 
     /**
      * Funkcja przyjmuje:
-     * @param whichFlow informacja o tym, które dane ma badać (oryginalne, po filtrze 60, po filtrze 80)
-     * @param ii informacja o tym, od którego indeksu rozpocząć analizę
-     * @param lookForPeak informacja o tym, czy ma szukać piku
-     * Znalezione piki dodawane są do obiektu #findedPeak
-     * Najmniejsza wartość jaką mogą przyjąć zmienne #localMin oraz #localMax to granica szumu #border
+     * @param whichFlow informacja o tym, ktore dane ma badal (oryginalne, po filtrze 60, po filtrze 80)
+     * @param ii informacja o tym, od ktorego indeksu rozpoczac analize
+     * @param lookForPeak informacja o tym, czy ma szukac piku
+     * Znalezione piki dodawane sa do obiektu #findedPeak
+     * Najmniejsza wartosc jaka moga przyjac zmienne #localMin oraz #localMax to granica szumu #border
      *
      *
      *
@@ -85,39 +84,33 @@ public class PeakFinder {
                 continue;
             }else{
                 if(dataToAnalysis>localMin && dataToAnalysis >= peaksToAnalysis.get(i-INTERVAL).getOrgData()){
-                    /** Pobierane wartości mają tendecję malejącą */
+                    /** Pobierane wartosci maja tendecje malejaca */
                     localMax = dataToAnalysis;
 
                 }else if(dataToAnalysis<localMax){
-                    /** Pobierane wartości mają tendecję malejącą */
+                    /** Pobierane wartosci maja tendecje malejaca� */
                     localMin = dataToAnalysis;
                     Float heightDiff = localMax - localMin;
                     /**
-                     * Procentowa część spadku w stosunku do wzrostu. Limit poniżej, którego znalezione teoretyczne
-                     * piki będą odrzucane. Parametr definiowany na początku jako #LIMIT.
+                     * Procentowa czesc spadku w stosunku do wzrostu. Limit ponizej, ktorego znalezione teoretyczne
+                     * piki beda odrzucane. Parametr definiowany na poczatku jako #LIMIT.
                      */
                     Float heightBorder = (localMax*LIMIT)/100;
                     if(heightDiff > heightBorder){
-                    	Boolean hOrg=false;
-                    	Boolean h60=false;
-                    	Boolean h80=false;
-
+                    	
                         if(whichFlow == ORIGINAL) {
                             findedPeaks.put(i, peaksToAnalysis.get(i));
                             findedPeaks.get(i).setHitOrg(true);
                             lookForPeak = true;
-                            hOrg=true;
                             findPeak(FILTER_60, i, lookForPeak);
                         }else if(whichFlow == FILTER_60 && lookForPeak == true) {
-                            h60=true;
                             findedPeaks.get(ii).setHit60(true);
                             findPeak(FILTER_80, ii , lookForPeak);
                         }else if(whichFlow == FILTER_80 && lookForPeak == true) {
                             findedPeaks.get(ii).setHit80(true);
-                            h80=true;
                             lookForPeak = false;
                         }
-                        picks.addData(hOrg, h60, h80);
+
                     }
                 }
             }
@@ -125,10 +118,9 @@ public class PeakFinder {
         SaveFile s = new SaveFile(findedPeaks, fileName);
     }
 
-    
 
     /**
-     * Funkcja do badania maksymalnej wartości z zakresu, używana gdy interwał jest większy niż 1
+     * Funkcja do badania maksymalnej wartosci z zakresu, uzywana gdy interwal� jest wiekszy niz 1
      * @param numbers
      * @return
      */
@@ -143,7 +135,7 @@ public class PeakFinder {
     }
 
     /**
-     * Metoda formatuje dane z otrzymanych pików
+     * Metoda formatuje dane z otrzymanych peakow
      * @return
      */
     @Override

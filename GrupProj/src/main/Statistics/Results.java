@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.FileWriter;
 
 /**
  * Author: Lukasz Janus
@@ -43,19 +44,7 @@ public class Results {
 	}
 
 	/**
-	 * Niewykorzystana
-	 */
-	public void pokaz()
-	{
-		System.out.println("Rozmiar listy: "+hitOrg.size());
-		for(int i=0;i<hitOrg.size(); i++)
-		{
-			System.out.println(hitOrg.get(i));
-		}
-	}
-
-	/**
-	 * Metoda do zliczania trafień - wartości True w danej liście
+	 * Metoda do zliczania trafien - wartosci True w danej liscie
 	 * @param list
 	 * @return
 	 */
@@ -115,5 +104,59 @@ public class Results {
 	public void setHit80(List<Boolean> hit80) {
 		this.hit80 = hit80;
 	}
+	
+	/**
+     * Metoda do analizowania peakow - wywolywana tylko raz w klasie ReadFolder
+     * @param picks
+     */
+    public void peakAnalysis(Results picks){
+
+    	Integer OrgSize = picks.trueCounter(picks.getHitOrg()); //ilosc wszystkich pickow
+    	Integer h60TrueCount = picks.trueCounter(picks.getHit60()); //ilosc trafien filtr-60
+    	Integer h80TrueCount = picks.trueCounter(picks.getHit80()); //ilosc trafien filtr-80
+
+    	Float lostPercent60;// = 2.0f;
+    	Float lostPercent80;
+
+    	if (h60TrueCount>0)
+    	{
+    		lostPercent60 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //wersja pokazujaca, ile procent utracono
+    		//lostPercent60 = 100*((float)OrgSize/((float)h60TrueCount)); //wersja procentow z zapisem
+    	} else {
+    		lostPercent60 = (float) 0.0;
+    	}
+
+    	if (h80TrueCount>0)
+    	{
+    		lostPercent80 = OrgSize-(((float)h80TrueCount)/(float)OrgSize); //analogicznie, j.w.
+    		//lostPercent80 = 100*((float)OrgSize/((float)h80TrueCount));
+
+    	} else {
+    		lostPercent80 = (float) 0.0;
+    	}
+
+    	String endScore = "";
+    	//endScore +="Zbiorczy wynik koncowy dla wszystkich pick'ow:\nDane oryginalne: "+OrgSize+", filtr 60: "+h60TrueCount+", filtr 80: "+h80TrueCount;
+    	//endScore +="\nProcent utraconych pik'ow: filtr 60: "+lostPercent60+", filtr 80: "+lostPercent80;
+
+    	endScore +="Sumaryczna_liczba_peakow:\n";
+    	endScore +="Peak_prawdziwy:"+" filtr60:"+" filtr80:\n";
+    	endScore += OrgSize+" "+h60TrueCount+" "+h80TrueCount;
+    	endScore +="\nProcent_utraconych_pik'ow:\n";
+    	endScore +="filtr60:"+" filtr_80:\n";
+    	endScore +=lostPercent60+" "+lostPercent80;
+    	//System.out.println(endScore); //finished score
+ 
+        try {
+        	FileWriter fileWriter = new FileWriter("GrupProj\\electron\\Result.csv");
+			fileWriter.write(endScore);
+			fileWriter.flush();
+	        fileWriter.close();
+		} catch (IOException e) {
+			System.out.println("Error sava");
+			e.printStackTrace();
+		}
+
+    }
 
 }
