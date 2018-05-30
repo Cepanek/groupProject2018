@@ -1,101 +1,157 @@
 package main.Tools;
 
+import main.Statistics.Results;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Otwieranie plików
+ * Otwieranie plikow
  *
- * @TODO
- * - otwórz plik
- * - zrzut danych do listy obiektów typu DataFrame
+ * - zrzut danych do listy obiektow typu DataFrame
+ * - liczenie szumu
+ * - obliczanie maksymalnego szczytu
  */
 public class OpenFile {
-	
-	//private final static String INPUT_FOLDER = "H:\\OFFLINE\\Offline\\electron\\ch1_org_filtered";
-	private final static String INPUT_FOLDER = "electron\\ch1_org_filtered";
-	private static Double[] original;
-    private static Double[] bessel60;
-    private static Double[] bessel80;
-    
-    
-    public void readFiles() throws FileNotFoundException, IOException
-    {
-    	File folder;     // katalog z plikami
-        File[] files;     // tablica plikow
-        OpenFile data;    // dane z pojedynczego pliku
-        ArrayList<OpenFile> dataCollect;    // dane z wszystkich plikow
 
-        folder = new File(INPUT_FOLDER);    // tworze katalog
-        files = folder.listFiles();    // pobieram pliki z katalogu
-        dataCollect = new ArrayList<>();    // lista na dane
-        
-        for (File file : files)    // petla po plikach
-        {
-        	// sciezka + nazwa pliku, ktory obecnie wczytuje
-            System.out.println("Loading: " + file.getAbsolutePath());
-            data = new OpenFile();    // tworze obiekt z danymi
-            read(file.getAbsolutePath());    // wczytuje dane
-
-            data.getOriginal();
-            data.getBessel60();
-            data.getBessel80();
-            
-            dataCollect.add(data);    // dodaje dane do kolekcji
-            System.out.println("[OK]");
-            
-        }
-
-    }
+    private ArrayList<Float> original;
+    private ArrayList<Float> bessel60;
+    private ArrayList<Float> bessel80;
     
-    public static void read(String path) throws FileNotFoundException, IOException
-    {
-        BufferedReader file;
-        
-        file = new BufferedReader(new FileReader(path));
-        file.readLine();    // pomijam 1-szy wiersz
+    static private Results Result = new Results();
+    
+    private List<DataFrame> dataFrame = new ArrayList<>();
+    private Float noise;
+    private Double maxValueInFile = 0.0;
+
+    /**
+     * Czytanie pliku i wsadzanie danych do obiektu dataFrame
+     * Obliczanie szumu i maksymalnej wartości
+     *
+     * @param path
+     * @throws IOException
+     */
+    public void read(String path) throws IOException {
+        Float sumValue = 0.0f;
+
+        BufferedReader file = new BufferedReader(new FileReader(path));
+        file.readLine();                    // pomijam 1-szy wiersz
         original = convertToArray(file);    // 2-gi wiersz
         bessel60 = convertToArray(file);    // 3-ci wiersz
         bessel80 = convertToArray(file);    // 4-ty wiersz
         file.close();
-    }
-    
-    public Double[] getOriginal() { return original; }
-    public Double[] getBessel60() { return bessel60; }
-    public Double[] getBessel80() { return bessel80; }
-    
-    private static Double[] convertToArray(BufferedReader plik) throws IOException
-    {
-        ArrayList<Double> list;
-        Double[] array;
-        Double value;
-        String line;
-        String[] explosion;
-        
-        line = plik.readLine();
-        explosion = line.split("\\s+", -1);
-        list = new ArrayList<>();
-      
-        for (String text : explosion)
-        {
-            if (!text.equals(""))
-            {
-                value = Double.parseDouble(text);    // pojedyncza wartosc
-                list.add(value);    // dodaje do listy
-                //DataFrame df = new DataFrame(3.14f, 3.45555f, 2.34f);  przyklad
-                //System.out.println(df.getOrgData());
-                //System.out.println(df.getF60Data());
-                //System.out.println(df.getF80Data());
+
+        for (int i = 0; i < original.size(); i++) {
+            dataFrame.add(new DataFrame(original.get(i), bessel60.get(i), bessel80.get(i)));
+            sumValue += original.get(i);
+            if (i > 0) {
+                if (original.get(i) > maxValueInFile) {
+                    maxValueInFile = Double.valueOf(original.get(i));
+                }
+            } else {
+                maxValueInFile = Double.valueOf(original.get(i));
             }
+  //          System.out.println(i+".\t czytana wartość: "+original.get(i) + ", \t Suma: " + sumValue + ", \t Maksymalna wartośc: " + maxValueInFile );
         }
-        
-        System.out.println(list.size());
-        array = new Double[list.size()];
-        return list.toArray(array);
+        noise = sumValue / original.size();
     }
-	
+    
+    /**
+     * Czytanie pliku wynikowego -  wsadzanie danych o peak'ach do obiektu Result
+     * 
+     *
+     * @param path
+     * @throws IOException
+     */
+    public void readScore(String path) throws IOException {
+    	    	 
+        BufferedReader file = null;
+        String line="";
+        String SplitBy = ",";
+        
+        try {
+        	file = new BufferedReader(new FileReader(path));
+        	while((line = file.readLine())!= null) {
+        		String[] wiersz = line.split(SplitBy); 
+        		//System.out.print(wiersz[4]+" "+wiersz[5]+" "+wiersz[6]+"\n");
+        		Result.addData(Boolean.parseBoolean(wiersz[4]), Boolean.parseBoolean(wiersz[5]),Boolean.parseBoolean(wiersz[6]));
+        	}
+        } catch(FileNotFoundException e) {
+        	
+        	e.printStackTrace();
+        } catch (IOException e) {
+        	
+        	e.printStackTrace();
+        } finally {
+        	if (file != null) {
+        		//Result.peakAnalysis(Result);
+        		try {
+        			file.close();
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        }        
+       // System.out.println(Result.getHitOrg().size());
+    }
+   
+  	/**
+       * Wywolanie analizy peakow
+       */
+    public static void peakAnalysis()
+    {
+    	Result.peakAnalysis(Result);
+    }
+    
+	/**
+     * Konwersja stringa do tablicy
+     * @param plik
+     * @return
+     * @throws IOException
+     */
+    private ArrayList<Float> convertToArray(BufferedReader plik) throws IOException {
+    	String[] explosion = plik.readLine().split("\\s+", -1); //Plik->CzytajLinie->podziel
+        ArrayList<Float> list = new ArrayList<>();
+
+        for (String text : explosion) {
+            if (!text.equals("")) list.add(Float.parseFloat(text));
+        }
+//        System.out.println(list.size());
+        return list;
+    }
+    
+    
+    /**
+     * Zwracam liste/ kolekjcje obiektow
+     * @return
+     */
+    public List<DataFrame> getDataFrame() {
+        return dataFrame;
+    }
+
+    /**
+     * Zwracam wynik obliczonego szumu
+     * @return
+     */
+    public Float getNoise() {
+        return noise;
+    }
+
+    /**
+     * Zwracam maksymalna wartosc w pliku
+     * @return
+     */
+    public Double getMaxValueInFile() {
+        return maxValueInFile;
+    }
+    
+    
+
 }

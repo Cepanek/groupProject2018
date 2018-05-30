@@ -1,18 +1,19 @@
 package main.Tools;
 
 
+import java.text.DecimalFormat;
 
 /**
  * Obiekt do analizy
  *
  * @TODO
- * - opakować w funkcje
+ * - opakowoj w funkcje
  *
  * orgData - oryginalne dane
  * f60Data - po filtrze 60MHz;
  * f80Data - po filtrze 80MHz;
- * isHit- jeżeli trafienie we wszystkich 3, to TRUE;
- * isLost- jeżeli trafienie tylko oryginalne, a spłaszczone choć w jednym- TRUE
+ * isHit- jezeli trafienie we wszystkich 3, to TRUE;
+ * isLost- jezeli trafienie tylko oryginalne, a splaszczone choc w jednym- TRUE
  *
  *
  */
@@ -20,8 +21,9 @@ public class DataFrame {
     private float orgData;
     private float f60Data;
     private float f80Data;
-    private boolean isHit;
-    private boolean isLost;
+    private boolean isHitOrg;
+    private boolean isHit60;
+    private boolean isHit80;
 
     /**
      *
@@ -34,8 +36,31 @@ public class DataFrame {
         this.f60Data = f60Data;
         this.f80Data = f80Data;
     }
-
+    
     /**
+    * Konstruktor testowo dorzucony przy probie odczytu plikow wynikowych, do usuniecia
+    * @param orgData
+    * @param f60Data
+    * @param f80Data
+    * @param orgData
+    * @param f60Data
+    * @param f80Data
+    */
+   public DataFrame(boolean isHitOrg, boolean isHit60, boolean isHit80 ) {
+       this.isHitOrg = isHitOrg;
+       this.isHit60 = isHit60;
+       this.isHit80 = isHit80;
+   }
+
+    public DataFrame(String bisHitOrg, String bisHit60, String bisHit80) {
+		// TODO Auto-generated constructor stub
+    	this.isHitOrg = Boolean.parseBoolean(bisHitOrg);
+        this.isHit60 = Boolean.parseBoolean(bisHit60);//konwersja na bool
+        this.isHit80 = Boolean.parseBoolean(bisHit80);
+    	
+	}
+
+	/**
      *
      * @return
      */
@@ -87,36 +112,49 @@ public class DataFrame {
      *
      * @return
      */
-    public boolean isHit() {
-        return isHit;
+    public boolean isHit60() {
+        return isHit60;
     }
 
     /**
      *
      * @param hit
      */
-    public void setHit(boolean hit) {
-        isHit = hit;
+    public void setHit60(boolean hit) {
+        isHit60 = hit;
     }
-
     /**
      *
      * @return
      */
-    public boolean isLost() {
-        return isLost;
+    public boolean isHit80() {
+        return isHit80;
     }
 
     /**
      *
-     * @param lost
+     * @param hit
      */
-    public void setLost(boolean lost) {
-        isLost = lost;
+    public void setHit80(boolean hit) {
+        isHit80 = hit;
+    }
+    /**
+     *
+     * @return
+     */
+    public boolean isHitOrg() {
+        return isHitOrg;
     }
 
     /**
      *
+     * @param hit
+     */
+    public void setHitOrg(boolean hit) {
+        isHitOrg = hit;
+    }
+
+    /**
      * @return
      */
     @Override
@@ -125,8 +163,24 @@ public class DataFrame {
                 "orgData=" + orgData +
                 ", f60Data=" + f60Data +
                 ", f80Data=" + f80Data +
-                ", isHit=" + isHit +
-                ", isLost=" + isLost +
+                ", isHitOrg=" + isHitOrg +
+                ", isHit60=" + isHit60 +
+                ", isHit80=" + isHit80 +
                 '}';
+    }
+
+    /**
+     * @return
+     */
+    public String toCsv() {
+        //DecimalFormat df = new DecimalFormat("#,###,###,###.0000");
+    	DecimalFormat df = new DecimalFormat("####.0000");
+        return
+                df.format(orgData) + ","+
+                df.format(f60Data) + ","+
+                df.format(f80Data) + ","+
+                isHitOrg + ","+
+                isHit60 + ","+
+                isHit80 + "\n";
     }
 }

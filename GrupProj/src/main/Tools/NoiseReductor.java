@@ -1,3 +1,10 @@
+/**
+
+
+
+        TO JU¯ RACZEJ NIE POTRZEBNE
+
+/**/
 package main.Tools;
 
 import main.Analysator.PeakFinder;
@@ -8,8 +15,8 @@ import java.util.List;
  * Odszumiacz
  *
  * @TODO
- * - policz Å›redniÄ…
- * - wyznacz prÃ³g szumu
+ * - policz œredni¹
+ * - wyznacz próg szumu
  */
 public class NoiseReductor {
 
@@ -23,7 +30,7 @@ public class NoiseReductor {
      */
     public NoiseReductor(List<PeakFinder> peaks) {
         this.peaks = peaks;
-        this.noiseBorder= 0; //to trzeba bÄ™dzie policzyÄ‡
+        this.noiseBorder= 0; //to trzeba bedzie policzyc
    }
 
     /**
@@ -42,3 +49,5 @@ public class NoiseReductor {
         this.noiseBorder = noiseBorder;
     }
 }
+
+/**/
