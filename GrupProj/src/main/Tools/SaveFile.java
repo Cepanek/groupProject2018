@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class SaveFile {
     public SaveFile(Map<Integer, DataFrame> values, String fileName) throws IOException {
-        FileWriter fileWriter = new FileWriter("H:\\OFFLINE\\Offline\\electron\\wyniki"+fileName+".csv");
+        FileWriter fileWriter = new FileWriter("H:\\OFFLINE\\Offline\\electron\\wyniki\\"+fileName+".csv");
         values.toString();
 
         for ( Integer key : values.keySet() ) {
