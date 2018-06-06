@@ -9,14 +9,14 @@ import java.util.List;
 import java.io.FileWriter;
 
 /**
- * Author: Lukasz Janus
- * 20-05-2018
+ *  @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ *  @2018
  * 
  * Klasa - kontener pomocniczy do przechowywania i zliczania wartosci false/true dla poszczegolnych peak'ow.
  */
 public class Results {
 	
-	//listy do danych oryginalnych i filtr�w
+	//listy do danych oryginalnych i filtr�w
 	private List<Boolean> hitOrg;
 	private List<Boolean> hit60;
 	private List<Boolean> hit80;
@@ -25,8 +25,7 @@ public class Results {
 	 * Konstruktor
 	 */
 	public Results() {
-		
-		hitOrg = new ArrayList<Boolean>(); 
+		hitOrg = new ArrayList<Boolean>();
 		hit60 = new ArrayList<Boolean>();
 		hit80 = new ArrayList<Boolean>();
 	}
@@ -48,59 +47,61 @@ public class Results {
 	 * @param list
 	 * @return
 	 */
-	public Integer trueCounter(List<Boolean> list)
-	{
+	public Integer trueCounter(List<Boolean> list) {
 		int temp=0;
-		for (int i=0;i<list.size();i++)
-		{
-			if (list.get(i)==true)
-			{
+		for (int i=0;i<list.size();i++){
+			if (list.get(i)==true)	{
 				temp++;
 			}
 		}
 		return temp;
 	}
 
-	/**
-	 * Zapis do pliku csv, jako dane wejsciowe zbiorczy string
-	 * @param endScore
-	 */
-	public void csvWriter(String endScore)
-	{
-		String fileName = "H:\\OFFLINE\\Offline\\electron\\wyniki\\Analiza.csv";
-    	
-    	Path sPath = Paths.get(fileName);
-    	ArrayList<String> out = new ArrayList<>();
-    	
-        out.add(endScore);
-        
-        try {
-            Files.write(sPath, out);
-        } catch (IOException ex) {
-            System.out.println("Saving file failed!");
-        }
-	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public List<Boolean> getHitOrg() {
 		return hitOrg;
 	}
 
+	/**
+	 *
+	 * @param hitOrg
+	 */
 	public void setHitOrg(List<Boolean> hitOrg) {
 		this.hitOrg = hitOrg;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public List<Boolean> getHit60() {
 		return hit60;
 	}
 
+	/**
+	 *
+	 * @param hit60
+	 */
 	public void setHit60(List<Boolean> hit60) {
 		this.hit60 = hit60;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public List<Boolean> getHit80() {
 		return hit80;
 	}
 
+	/**
+	 *
+	 * @param hit80
+	 */
 	public void setHit80(List<Boolean> hit80) {
 		this.hit80 = hit80;
 	}
@@ -118,16 +119,14 @@ public class Results {
     	Float lostPercent60;// = 2.0f;
     	Float lostPercent80;
 
-    	if (h60TrueCount>0)
-    	{
+    	if (h60TrueCount>0)	{
     		lostPercent60 = OrgSize-(((float)h60TrueCount)/(float)OrgSize); //wersja pokazujaca, ile procent utracono
     		//lostPercent60 = 100*((float)OrgSize/((float)h60TrueCount)); //wersja procentow z zapisem
     	} else {
     		lostPercent60 = (float) 0.0;
     	}
 
-    	if (h80TrueCount>0)
-    	{
+    	if (h80TrueCount>0)	{
     		lostPercent80 = OrgSize-(((float)h80TrueCount)/(float)OrgSize); //analogicznie, j.w.
     		//lostPercent80 = 100*((float)OrgSize/((float)h80TrueCount));
 

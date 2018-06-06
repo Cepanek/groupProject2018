@@ -9,12 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ * @2018
+ *
  * Analizator peakow
  * #peaksToAnalysis to lista obiektow z danymi to szukania w nich pikow
- * @TODO
- * - na podstawie wyznaczonego szumu wyznacz piki
- * - oznacz piki porownujac sygnal� oryginalny z przefiltrowanymi
- * - zmien flage w DataFrame || odkopiuj DataFrame do nowej listy
+ *
+ * LIMIT to informacja z jaką różnicą procentową pomiedzy lokalnym maksimum i minimum, maksimum traktowane jest jako peak, lub pomijane, jako szum/odbicie
  */
 public class PeakFinder {
     private static final Integer INTERVAL = 1;
@@ -33,6 +34,7 @@ public class PeakFinder {
     /**
      * @param peaksToAlanyse
      * @param border
+     * @param fileName
      */
     public PeakFinder(List<DataFrame> peaksToAlanyse, Float border, String fileName) {
         this.peaksToAnalysis = peaksToAlanyse;
@@ -88,7 +90,7 @@ public class PeakFinder {
                     localMax = dataToAnalysis;
 
                 }else if(dataToAnalysis<localMax){
-                    /** Pobierane wartosci maja tendecje malejaca� */
+                    /** Pobierane wartosci maja tendecje malejaca� */
                     localMin = dataToAnalysis;
                     Float heightDiff = localMax - localMin;
                     /**
@@ -110,7 +112,6 @@ public class PeakFinder {
                             findedPeaks.get(ii).setHit80(true);
                             lookForPeak = false;
                         }
-
                     }
                 }
             }
@@ -120,7 +121,7 @@ public class PeakFinder {
 
 
     /**
-     * Funkcja do badania maksymalnej wartosci z zakresu, uzywana gdy interwal� jest wiekszy niz 1
+     * Funkcja do badania maksymalnej wartosci z zakresu, uzywana gdy interwal� jest wiekszy niz 1
      * @param numbers
      * @return
      */
@@ -147,10 +148,18 @@ public class PeakFinder {
                 '}';
     }
 
+    /**
+     *
+     * @param findedPeaks
+     */
     public void setFindedPeaks(Map<Integer, DataFrame> findedPeaks) {
         this.findedPeaks = findedPeaks;
     }
 
+    /**
+     *
+     * @return
+     */
     public Map<Integer, DataFrame> getFindedPeaks() {
         return findedPeaks;
     }

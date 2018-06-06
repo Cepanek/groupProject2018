@@ -4,17 +4,18 @@ package main.Tools;
 import java.text.DecimalFormat;
 
 /**
+ *
+ *  @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ *  @2018
  * Obiekt do analizy
  *
- * @TODO
- * - opakowoj w funkcje
  *
  * orgData - oryginalne dane
  * f60Data - po filtrze 60MHz;
  * f80Data - po filtrze 80MHz;
- * isHit- jezeli trafienie we wszystkich 3, to TRUE;
- * isLost- jezeli trafienie tylko oryginalne, a splaszczone choc w jednym- TRUE
- *
+ * isHit- jezeli trafienie w orginalu;
+ * isHit60- jezeli trafienie w 60;
+ * isHit80- jezeli trafienie w 80;
  *
  */
 public class DataFrame {
@@ -36,29 +37,6 @@ public class DataFrame {
         this.f60Data = f60Data;
         this.f80Data = f80Data;
     }
-    
-    /**
-    * Konstruktor testowo dorzucony przy probie odczytu plikow wynikowych, do usuniecia
-    * @param orgData
-    * @param f60Data
-    * @param f80Data
-    * @param orgData
-    * @param f60Data
-    * @param f80Data
-    */
-   public DataFrame(boolean isHitOrg, boolean isHit60, boolean isHit80 ) {
-       this.isHitOrg = isHitOrg;
-       this.isHit60 = isHit60;
-       this.isHit80 = isHit80;
-   }
-
-    public DataFrame(String bisHitOrg, String bisHit60, String bisHit80) {
-		// TODO Auto-generated constructor stub
-    	this.isHitOrg = Boolean.parseBoolean(bisHitOrg);
-        this.isHit60 = Boolean.parseBoolean(bisHit60);//konwersja na bool
-        this.isHit80 = Boolean.parseBoolean(bisHit80);
-    	
-	}
 
 	/**
      *

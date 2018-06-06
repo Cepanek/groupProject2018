@@ -8,10 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
-//import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 /**
- *
+ * @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ * * @2018
  */
 public class ReadFolder {
     private static final String ORIGINAL = "org";
@@ -21,56 +20,45 @@ public class ReadFolder {
 
     /**
      * Konstruktor ktorego parametrem jest konkretny folder
-     * @param input
+     *
+     * @param input - folder który czytamy
      */
     public ReadFolder(String input) {
         this.input = input;
     }
 
     /**
-     *  - Czytanie w petli plikow,
-     *  - przetwarzanie danych na liste obiektow
-     *  - obliczanie szumu
-     *  - obliczanie maksymalnej wartosci
+     * - Czytanie w petli plikow,
+     * - przetwarzanie danych na liste obiektow
+     * - obliczanie szumu
+     * - obliczanie maksymalnej wartosci
      *
+     * @param flag - flaga sprawdzająca- czy odczyt danych, czy analiza
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void readFiles(int flag) throws FileNotFoundException, IOException  {
-        File folder = new File(input);                  // tworze katalog
-        File[] files  = folder.listFiles();            // tablica plikow
-//        OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plik�w
-        if (flag == 1)
-        {
-        	for (File file : files) {
-                System.out.println("Loading: " + file.getAbsolutePath());               // sciezka + nazwa pliku, ktory obecnie wczytuje
-                OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plik�w
-                data.read(file.getAbsolutePath());          // wczytuje dane
+    public void readFiles(int flag) throws FileNotFoundException, IOException {
+        File folder = new File(input);
+        File[] files = folder.listFiles();
+        if (flag == 1) {
+            for (File file : files) {
+                OpenFile data = new OpenFile();                  // obiekt do odczytu kolejnych plik�w
+                data.read(file.getAbsolutePath());          //  sciezka + nazwa pliku, ktory obecnie wczytuje
                 /*------------------------------------------------------------------------------
+                Przykład "dobrania się" do obiektu:
                 data.getNoise();                            // tu jest poziom szumu
                 data.getDataFrame();                        // tu jest lista obiektow
                 data.getMaxValueInFile();                   // tu jest maksymalna wartosc
                 ------------------------------------------------------------------------------*/
                 PeakFinder peakFinder = new PeakFinder(data.getDataFrame(), data.getNoise(), file.getName());
                 peakFinder.findPeak(ORIGINAL, START, lookForPeak);
-                DecimalFormat df = new DecimalFormat("#,###,###.0000");
-                
-        	}
-            
-        }
-        	else if (flag ==2)
-        {
-        		
-        		for (File file : files) {
-                    System.out.println("Loading: " + file.getAbsolutePath());               // sciezka + nazwa pliku, ktory obecnie wczytuje
-                    OpenFile data= new OpenFile();                  // obiekt do odczytu kolejnych plikow
-                    data.readScore(file.getAbsolutePath());          // wczytuje dane wynikowe
-                     
-        		System.out.println("[OK]"+data.getDataFrame());
-        		
-        		}
-        		OpenFile.peakAnalysis(); //wywolanie analizy peakow - metoda statyczna w klasie OpenFile
-        		
+            }
+        } else if (flag == 2) {
+            for (File file : files) {
+                OpenFile data = new OpenFile();                  // obiekt do odczytu kolejnych plikow
+                data.readScore(file.getAbsolutePath());          // wczytuje dane wynikowe
+            }
+            OpenFile.peakAnalysis(); //wywolanie analizy peakow - metoda statyczna w klasie OpenFile
         }
     }
 }

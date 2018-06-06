@@ -5,21 +5,28 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Zapisz plik
+ * @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ * @2018
  *
- * @TODO
- * - zapisz piki
- * - zapisz trafienia z 3 fotopowielaczy
  */
 public class SaveFile {
-    public SaveFile(Map<Integer, DataFrame> values, String fileName) throws IOException {
-        FileWriter fileWriter = new FileWriter("H:\\OFFLINE\\Offline\\electron\\wyniki\\"+fileName+".csv");
-        values.toString();
 
+    /**
+     *
+     * Podajemy scieżkę (względną, lub bezwzględną) do plików do zapisu
+     *          - albo Windowsowo: "H:\\OFFLINE\\Offline\\electron\\ch1_org_filtered"
+     *          - albo ogólnie: "GrupProj/electron/ch1_org_filtered"
+     *
+     * @param values - mapa z danymi
+     * @param fileName - nazwa pliku
+     * @throws IOException
+     */
+    public SaveFile(Map<Integer, DataFrame> values, String fileName) throws IOException {
+        FileWriter fileWriter = new FileWriter("GrupProj/electron/wyniki");
+        values.toString();
         for ( Integer key : values.keySet() ) {
             fileWriter.write(key+","+values.get(key).toCsv());
         }
-
         fileWriter.flush();
         fileWriter.close();
     }
