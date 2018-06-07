@@ -1,12 +1,10 @@
 package main.Tools;
 
 import main.Analysator.PeakFinder;
-import main.Statistics.Results;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DecimalFormat;
 
 /**
  * @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
