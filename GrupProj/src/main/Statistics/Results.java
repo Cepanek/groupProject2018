@@ -147,7 +147,7 @@ public class Results {
     	//System.out.println(endScore); //finished score
  
         try {
-        	FileWriter fileWriter = new FileWriter("H:\\OFFLINE\\Offline\\electron\\wyniki\\Result.csv");
+        	FileWriter fileWriter = new FileWriter("GrupProj/electron/Result.csv");
 			fileWriter.write(endScore);
 			fileWriter.flush();
 	        fileWriter.close();

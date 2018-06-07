@@ -22,7 +22,7 @@ public class SaveFile {
      * @throws IOException
      */
     public SaveFile(Map<Integer, DataFrame> values, String fileName) throws IOException {
-        FileWriter fileWriter = new FileWriter("GrupProj/electron/wyniki");
+        FileWriter fileWriter = new FileWriter("GrupProj/electron/wyniki/"+fileName+".csv");
         values.toString();
         for ( Integer key : values.keySet() ) {
             fileWriter.write(key+","+values.get(key).toCsv());

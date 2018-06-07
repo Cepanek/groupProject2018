@@ -23,7 +23,7 @@ public class App {
         readFolder.readFiles(1);
 
         // Analiza plików
-        ReadFolder toAnalyse = new ReadFolder("GrupProj/electron/ch1_org_filtered");
+        ReadFolder toAnalyse = new ReadFolder("GrupProj/electron/wyniki/");
         toAnalyse.readFiles(2);
 
         System.out.println("Stop: "+ ZonedDateTime.now().toString());
