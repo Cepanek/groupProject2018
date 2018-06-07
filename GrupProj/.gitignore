@@ -1,4 +1,9 @@
-/bin/
+**/bin
+**/out
+**/target
+**/test
+**/tests
 .classpath
 .project
+.idea
 .iml
