@@ -6,6 +6,7 @@ import java.time.ZonedDateTime;
 
 /**
  * @author Agnieszka Ceran, Mateusz Marchelewicz, Łukasz Janus, Łukasz Gwozdowski
+ *
  * @2018
  *
  *  Podajemy scieżkę (względną, lub bezwzględną) do plików do analizy

@@ -24,8 +24,8 @@ import java.util.Map;
  * ***************************
  */
 public class PeakFinder {
-    private static final Integer INTERVAL = 1;
-    private static final Float LIMIT = 25.0f;
+    private static final int INTERVAL = 1;
+    private static final Float LIMIT = 30.0f;
     private static final String ORIGINAL = "org";
     private static final String FILTER_60 = "60";
     private static final String FILTER_80 = "80";
@@ -71,7 +71,7 @@ public class PeakFinder {
              end = datasize;
              jump = INTERVAL;
         }else if(whichFlow == FILTER_60  || whichFlow == FILTER_80){
-             end = 100;
+             end = 30;
              jump = 1;
         }else{
             System.out.println("Parameter whichFlow is null or empty or value incorrect");
