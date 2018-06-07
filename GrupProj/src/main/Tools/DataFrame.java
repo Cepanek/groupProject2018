@@ -152,7 +152,7 @@ public class DataFrame {
      */
     public String toCsv() {
         //DecimalFormat df = new DecimalFormat("#,###,###,###.0000");
-    	DecimalFormat df = new DecimalFormat("####.0000");
+    	DecimalFormat df = new DecimalFormat("####.###");
         return
                 df.format(orgData) + ","+
                 df.format(f60Data) + ","+

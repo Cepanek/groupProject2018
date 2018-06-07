@@ -14,12 +14,18 @@ import java.util.Map;
  *
  * Analizator peakow
  * #peaksToAnalysis to lista obiektow z danymi to szukania w nich pikow
+ * *
+ * ***************************
+ * ***************************
  *
  * LIMIT to informacja z jaką różnicą procentową pomiedzy lokalnym maksimum i minimum, maksimum traktowane jest jako peak, lub pomijane, jako szum/odbicie
+ *
+ * ***************************
+ * ***************************
  */
 public class PeakFinder {
     private static final Integer INTERVAL = 1;
-    private static final Float LIMIT = 5.0f;
+    private static final Float LIMIT = 25.0f;
     private static final String ORIGINAL = "org";
     private static final String FILTER_60 = "60";
     private static final String FILTER_80 = "80";
