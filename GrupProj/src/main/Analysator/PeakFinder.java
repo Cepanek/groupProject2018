@@ -71,7 +71,7 @@ public class PeakFinder {
              end = datasize;
              jump = INTERVAL;
         }else if(whichFlow == FILTER_60  || whichFlow == FILTER_80){
-             end = 30;
+             end = 100;
              jump = 1;
         }else{
             System.out.println("Parameter whichFlow is null or empty or value incorrect");
