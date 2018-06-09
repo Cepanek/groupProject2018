@@ -117,14 +117,14 @@ public class Results {
     	Float lostPercent80;
 
     	if (h60TrueCount>0)	{
-    		lostPercent60 = 100-(((float)h60TrueCount)/(float)OrgSize); //wersja pokazujaca, ile procent utracono
+    		lostPercent60 = 100-(((float)h60TrueCount*100)/(float)OrgSize); //wersja pokazujaca, ile procent utracono
     		//lostPercent60 = 100*((float)OrgSize/((float)h60TrueCount)); //wersja procentow z zapisem
     	} else {
     		lostPercent60 = (float) 0.0;
     	}
 
     	if (h80TrueCount>0)	{
-		lostPercent80 = 100-(((float)h80TrueCount)/(float)OrgSize); //analogicznie, j.w.
+		lostPercent80 = 100-(((float)h80TrueCount*100)/(float)OrgSize); //analogicznie, j.w.
     		//lostPercent80 = 100*((float)OrgSize/((float)h80TrueCount));
 
     	} else {
